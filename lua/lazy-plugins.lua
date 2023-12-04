@@ -32,7 +32,21 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
-
+  {
+    'mhartington/formatter.nvim',
+    config = function()
+      require("formatter").setup(
+        {
+          filetype = {
+            python = {
+              require("formatter.filetypes.python").black,
+              require("formatter.filetypes.python").isort,
+            }
+          }
+        }
+      )
+    end,
+  },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -50,7 +64,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -94,7 +108,9 @@ require('lazy').setup({
     -- Theme inspired by Atom
     'navarasu/onedark.nvim',
     priority = 1000,
-    config = function()
+    config   = function()
+      vim.o.background = 'dark'
+      require('onedark').setup({ style = 'darker' })
       vim.cmd.colorscheme 'onedark'
     end,
   },
@@ -154,11 +170,7 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
+  require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`

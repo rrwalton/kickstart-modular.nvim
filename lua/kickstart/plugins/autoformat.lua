@@ -68,6 +68,16 @@ return {
             }
           end,
         })
+        vim.api.nvim_create_autocmd('BufWritePost', {
+          group = get_augroup(client),
+          command = ":FormatWrite",
+          vim.lsp.buf.format {
+            async = false,
+            filter = function(c)
+              return c.name == "pylsp" or c.name == "pyright"
+            end,
+          }
+        })
       end,
     })
   end,
